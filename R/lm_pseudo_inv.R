@@ -1,3 +1,3 @@
-lm_peudo_inv = function(design, outcome){
+lm_pseudo_inv = function(design, outcome){
   return(solve(t(design) %*% design, t(design) %*% outcome))
 }
