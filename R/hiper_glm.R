@@ -6,31 +6,31 @@ hiper_glm <- function(design, outcome, model, option = list()){
   }
   hglm_out <- list()
   class(hglm_out) <- "hglm"
-  if(model == "linear"){
-    if(is.null(option$mle_solver)){
+  if (model == "linear") {
+    if (is.null(option$mle_solver)) {
       option$mle_solver = "PINV"
     }
-    if(option$mle_solver == "PINV"){
+    if (option$mle_solver == "PINV") {
       hglm_out$coef = lm_pseudo_inv(design, outcome)
     }
-    else if(option$mle_solver == "BFGS"){
+    else if (option$mle_solver == "BFGS") {
       hglm_out$coef = lm_bfgs(design, outcome)
     }
-    else{
+    else {
       stop(print("This mle algorithm in lnear model is not supported."))
     }
   }
-  else if(model == "logit"){
-    if(is.null(option$mle_solver)){
+  else if (model == "logit") {
+    if (is.null(option$mle_solver)) {
       option$mle_solver = "Newton"
     }
-    if(option$mle_solver == "Newton"){
+    if (option$mle_solver == "Newton") {
       hglm_out$coef = logit_newton(design, outcome)
     }
-    else if(option$mle_solver == "BFGS"){
+    else if (option$mle_solver == "BFGS") {
       hglm_out$coef = logit_bfgs(design, outcome)
     }
-    else{
+    else {
       stop(print("This mle algorithm in lnear model is not supported."))
     }
   }
