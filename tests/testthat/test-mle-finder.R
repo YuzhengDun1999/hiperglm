@@ -11,7 +11,7 @@ testthat::test_that("linalg and optim least-sq coincide", {
   ))
 })
 
-test_that("newton and bfgs outputs coincide on logit model", {
+testthat::test_that("newton and bfgs outputs coincide on logit model", {
   n_obs <- 32; n_pred <- 4
   data <- simulate_data(n_obs, n_pred, model = 'logit', seed = 1918)
   design <- data$design; outcome <- data$outcome
