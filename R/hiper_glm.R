@@ -31,7 +31,7 @@ hiper_glm <- function(design, outcome, model, option = list()){
       hglm_out$coef = logit_bfgs(design, outcome)
     }
     else {
-      stop(print("This mle algorithm in lnear model is not supported."))
+      stop(print("This mle algorithm in logistic model is not supported."))
     }
   }
   return(hglm_out)
