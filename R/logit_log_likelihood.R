@@ -19,3 +19,9 @@ logit_log_likelihood_hessian = function(beta, design, outcome){
   hessian = -t(design) %*% diag(prob[,1] * (1 - prob[,1])) %*% design
   return(hessian)
 }
+
+logit_weight_vec = function(beta, design){
+  prob = sigmoid(design %*% beta)
+  weight_vec = prob[,1] * (1 - prob[,1])
+  return(weight_vec)
+}
