@@ -1,5 +1,5 @@
 #' @export
-hiper_glm <- function(design, outcome, model, option = list()){
+hiper_glm <- function(design, outcome, model, option = list(), newton_opt = 'qr'){
   supported_model <- c("linear", "logit")
   if (!(model %in% supported_model)) {
     stop(sprintf("The model %s is not supported.", model))
@@ -19,7 +19,7 @@ hiper_glm <- function(design, outcome, model, option = list()){
   }
   else if (model == "logit") {
     if ((is.null(option$mle_solver)) || (option$mle_solver == "Newton")) {
-      hglm_out$coef = logit_newton(design, outcome)
+      hglm_out$coef = logit_newton(design, outcome, maxiter = 1000, newton_opt = newton_opt)
     }
     else if (option$mle_solver == "BFGS") {
       hglm_out$coef = bfgs(design, outcome, logit_log_likelihood, logit_log_likelihood_gradient)
