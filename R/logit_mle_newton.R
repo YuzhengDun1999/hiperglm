@@ -24,7 +24,7 @@ take_one_newton_step = function(design, outcome, beta_old, newton_opt = "qr"){
     weight_vec = logit_weight_vec(beta_old, design)
     y_adjusted = sqrt(weight_vec) * design %*% beta_old + 1 / sqrt(weight_vec) * (outcome - prob)
     x_adjusted = diag(sqrt(weight_vec)) %*% design
-    beta_new = qr.solve(x_adjusted, y_adjusted)
+    beta_new = QR_solver_eigen(x_adjusted, y_adjusted)
   }
   return(beta_new)
 }
