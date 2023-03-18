@@ -5,13 +5,18 @@ are_all_close <- function(v, w, abs_tol = 1e-6, rel_tol = 1e-6) {
   return(are_all_within_atol && are_all_within_rtol)
 }
 
+take_one_newton_step = function(design, outcome, beta_old){
+  hessian = logit_log_likelihood_hessian(beta_old, design, outcome)
+  gradient = logit_log_likelihood_gradient(beta_old, design, outcome)
+  beta_new = beta_old - solve(hessian, gradient)
+  return(beta_new)
+}
+
 logit_newton = function(design, outcome, maxiter = 1000){
   n_pred = ncol(design)
   beta_old = rep(0, n_pred)
   for (i in 1:maxiter) {
-    hessian = logit_log_likelihood_hessian(beta_old, design, outcome)
-    gradient = logit_log_likelihood_gradient(beta_old, design, outcome)
-    beta_new = beta_old - solve(hessian, gradient)
+    beta_new = take_one_newton_step(design, outcome, beta_old)
     loglik_old = logit_log_likelihood(beta_old, design, outcome)
     loglik_new = logit_log_likelihood(beta_new, design, outcome)
     if (are_all_close(loglik_old, loglik_new)) {
