@@ -7,8 +7,8 @@ hiper_glm <- function(design, outcome, model, option = list()){
   hglm_out <- list()
   class(hglm_out) <- "hglm"
   if (model == "linear") {
-    if ((is.null(option$mle_solver)) || (option$mle_solver == "PINV")) {
-      hglm_out$coef = lm_pseudo_inv(design, outcome)
+    if ((is.null(option$mle_solver)) || (option$mle_solver == "qr")) {
+      hglm_out$coef = lm_qr(design, outcome)
     }
     else if (option$mle_solver == "BFGS") {
       hglm_out$coef = bfgs(design, outcome, lm_log_likelihood, lm_log_likelihood_gradient)
